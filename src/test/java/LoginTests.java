@@ -75,7 +75,7 @@ public class LoginTests extends BaseTest {
     }
 
     @Test
-    public void logicFailed() throws InterruptedException {
+    public void incorrectEmail() throws InterruptedException {
 
         EdgeOptions options = new EdgeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -117,7 +117,7 @@ public class LoginTests extends BaseTest {
     }
 
     @Test
-    public void logicFailed2() throws InterruptedException {
+    public void incorrectPassword() throws InterruptedException {
 
 
         EdgeOptions options = new EdgeOptions();
