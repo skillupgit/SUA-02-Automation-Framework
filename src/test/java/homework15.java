@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-public class Homework15 extends BaseTest{
+public class homework15 extends BaseTest{
 
     @Test
     public void logOut() throws InterruptedException {
