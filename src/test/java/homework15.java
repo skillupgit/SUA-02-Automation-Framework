@@ -11,7 +11,7 @@ import java.time.Duration;
 public class homework15 extends BaseTest{
 
     @Test
-    public void logOut() throws InterruptedException {
+    public void logOutTest() throws InterruptedException {
 
 
         //EdgeOptions options = new EdgeOptions();

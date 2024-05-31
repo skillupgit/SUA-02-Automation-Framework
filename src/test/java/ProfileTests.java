@@ -12,7 +12,7 @@ import java.time.Duration;
 public class ProfileTests extends BaseTest {
 
     @Test
-    public void logOut() throws InterruptedException {
+    public void logOutOne() throws InterruptedException {
 
 
         //EdgeOptions options = new EdgeOptions();

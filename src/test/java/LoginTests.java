@@ -1,30 +1,11 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
 
 public class LoginTests extends BaseTest {
     @Test
     public void loginEmptyEmailPassword() {
-
-//      Added ChromeOptions argument below to fix websocket error
-       /* ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));*/
-        //EdgeOptions options = new EdgeOptions();
-        //options.addArguments("--remote-allow-origins=*");
-
-        //WebDriver driver = new EdgeDriver();
-        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         String url = "https://demo.koel.dev/";
         driver.get(url);
@@ -32,48 +13,88 @@ public class LoginTests extends BaseTest {
         //driver.quit();
     }
 
-    @Test(enabled = false, description = "Not Yet due to issue")
-    public void logOut() throws InterruptedException {
+    @Test
+    public void logicSuccess() throws InterruptedException {
+
+        //navigateToPage();
+
+        provideEmail("demo@koel.dev");
+        Thread.sleep(1000);
+
+        providePassword("demo");
+        Thread.sleep(1000);
 
 
-        //EdgeOptions options = new EdgeOptions();
-        //options.addArguments("--remote-allow-origins=*");
+        clickLogin();
+        Thread.sleep(1000);
 
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--disable-notifications");
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        WebElement profileAvatar = driver.findElement(By.cssSelector("a.view-profile img"));
 
+        Assert.assertTrue(profileAvatar.isDisplayed());
+    }
 
-        String url = "https://demo.koel.dev/";
-        driver.get(url);
+    @Test
+    public void incorrectEmail() throws InterruptedException {
 
 
-        WebElement emailField = driver.findElement(By.cssSelector("input[type='email']"));
-        emailField.clear();
-        emailField.sendKeys("demo@koel.dev");
-        Thread.sleep(2000);
+        //navigateToPage();
+
+        provideEmail("google@koel.dev");
+        Thread.sleep(1000);
+
+        providePassword("demo");
+        Thread.sleep(1000);
+
+        clickLogin();
+        Thread.sleep(1000);
+
+        Assert.assertEquals(driver.getCurrentUrl(), url);
+
+    }
+
+    @Test
+    public void incorrectPassword() throws InterruptedException {
 
 
-        WebElement passwordField = driver.findElement(By.cssSelector("input[type='password']"));
-        passwordField.clear();
-        passwordField.sendKeys("demo");
-        Thread.sleep(2000);
+        //navigateToPage();
 
 
-        WebElement loginButton = driver.findElement(By.cssSelector("button[type='submit']"));
-        loginButton.click();
-        Thread.sleep(2000);
+        provideEmail("demo@koel.dev");
+        Thread.sleep(1000);
 
 
-        WebElement logoutButton = driver.findElement(By.cssSelector("button[data-title='Log out']"));
-        Thread.sleep(3000);
-        logoutButton.click();
+        providePassword("12345");
+        Thread.sleep(1000);
+
+
+        clickLogin();
+        Thread.sleep(1000);
+
+        Assert.assertEquals(driver.getCurrentUrl(), url);
+
+
+    }
+
+
+    @Test(enabled = true, description = "Not Yet due to issue")
+    public void logOutTest() throws InterruptedException {
+
+        //navigateToPage();
+
+        provideEmail("demo@koel.dev");
+        Thread.sleep(1000);
+
+        providePassword("demo");
+        Thread.sleep(1000);
+
+        clickLogin();
+        Thread.sleep(1000);
+
+        logOut();
+        Thread.sleep(1000);
 
         Assert.assertEquals(driver.getCurrentUrl(),url);
 
-        driver.quit();
     }
 
 }
