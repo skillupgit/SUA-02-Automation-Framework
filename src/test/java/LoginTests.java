@@ -105,9 +105,9 @@ public class LoginTests extends BaseTest {
         Thread.sleep(1000);
 
 
-        WebElement profileAvatar = driver.findElement(By.cssSelector("a.view-profile img"));
+        Assert.assertEquals(driver.getCurrentUrl(), url);
 
-        Assert.assertTrue(profileAvatar.isDisplayed());
+
 
 
         //close Browse
@@ -148,9 +148,7 @@ public class LoginTests extends BaseTest {
         Thread.sleep(1000);
 
 
-        WebElement profileAvatar = driver.findElement(By.cssSelector("a.view-profile img"));
-
-        Assert.assertTrue(profileAvatar.isDisplayed());
+        Assert.assertEquals(driver.getCurrentUrl(), url);
 
 
 
