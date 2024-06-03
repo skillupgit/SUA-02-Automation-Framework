@@ -1,4 +1,6 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -12,21 +14,53 @@ public class LoginTests extends BaseTest {
     @Test
     public void loginEmptyEmailPassword() {
 
-//      Added ChromeOptions argument below to fix websocket error
-       /* ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));*/
-        EdgeOptions options = new EdgeOptions();
-        options.addArguments("--remote-allow-origins=*");
-
-        WebDriver driver = new EdgeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
-        String url = "https://amazon.ca/";
+        String url = "https://demo.koel.dev/";
         driver.get(url);
+        Assert.assertEquals(driver.getCurrentUrl(),url);
+
+    }
+
+    @Test
+    public void logicSuccess() throws InterruptedException {
+
+        provideEmail("demo@koel.dev");
+        Thread.sleep(1000);
+
+        providePassword("demo");
+        Thread.sleep(1000);
+
+        clickLogin();
+        Thread.sleep(1000);
+
+        WebElement profileAvatar = driver.findElement(By.cssSelector("a.view-profile img"));
+        Assert.assertTrue(profileAvatar.isDisplayed());
+    }
+
+    @Test
+    public void incorrectEmail() throws InterruptedException {
+
+        provideEmail("google@demo.dev");
+        Thread.sleep(1000);
+
+        providePassword("demo");
+        Thread.sleep(1000);
+
         Assert.assertEquals(driver.getCurrentUrl(), url);
-        driver.quit();
+
+    }
+
+    @Test
+    public void incorrectPassword() throws InterruptedException {
+
+        provideEmail("demo@koel.dev");
+        Thread.sleep(1000);
+
+        providePassword("12345");
+        Thread.sleep(1000);
+
+        clickLogin();
+        Thread.sleep(1000);
+
+        Assert.assertEquals(driver.getCurrentUrl(),url);
     }
 }
