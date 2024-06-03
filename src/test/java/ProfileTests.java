@@ -1,89 +1,72 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
 
 public class ProfileTests extends BaseTest {
 
     @Test
-    public void logOutOne() throws InterruptedException {
+    public void profileNameChangeTest() throws InterruptedException {
 
+        provideEmail("demo@koel.dev");
+        Thread.sleep(1000);
 
-        //EdgeOptions options = new EdgeOptions();
-        //options.addArguments("--remote-allow-origins=*");
+        providePassword("demo");
+        Thread.sleep(1000);
 
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--disable-notifications");
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        clickLogin();
+        Thread.sleep(1000);
 
-
-        String url = "https://demo.koel.dev/";
-        driver.get(url);
-
-
-        WebElement emailField = driver.findElement(By.cssSelector("input[type='email']"));
-        emailField.clear();
-        emailField.sendKeys("demo@koel.dev");
+        clickOnProfileAvatar();
         Thread.sleep(2000);
 
 
-        WebElement passwordField = driver.findElement(By.cssSelector("input[type='password']"));
-        passwordField.clear();
-        passwordField.sendKeys("demo");
+        enterCurrentPassword("demo");
+        Thread.sleep(1000);
+
+        editName("Deep");
+        Thread.sleep(1000);
+
+        saveChanges();
+        Thread.sleep(1000);
+
+        varifySuccessMessage();
         Thread.sleep(2000);
 
-
-        WebElement loginButton = driver.findElement(By.cssSelector("button[type='submit']"));
-        loginButton.click();
-        Thread.sleep(2000);
-
-        //Profile Test
-
-        WebElement profileIcon = driver.findElement(By.cssSelector("img[alt='Avatar of Koel']"));
-        profileIcon.click();
-        Thread.sleep(2000);
-
-        //Click on name
-
-        WebElement editName = driver.findElement(By.cssSelector("input[id='inputProfileName']"));
-        editName.click();
-        Thread.sleep(2000);
-
-        //Change Name
-
-        WebElement changeName = driver.findElement(By.cssSelector("input[id='inputProfileName']"));
-        changeName.clear();
-        changeName.sendKeys("Honeydeep");
-        Thread.sleep(2000);
-
-        // Save Changes
-
-        WebElement saveChanges = driver.findElement(By.cssSelector("button[class='btn-submit']"));
-        saveChanges.click();
-        Thread.sleep(2000);
-
-        //Logout Website
-
-        WebElement logoutButton = driver.findElement(By.cssSelector("button[data-title='Log out']"));
-        logoutButton.click();
-        Thread.sleep(2000);
-
-
-
-        //Assert.assertEquals(driver.getCurrentUrl(),url);
-
-
-        //Quit Browser
-        driver.quit();
 
 
     }
-}
+
+    public void clickOnProfileAvatar(){
+        WebElement profileIcon = driver.findElement(By.cssSelector("img[alt='Avatar of Koel']"));
+        profileIcon.click();
+    }
+
+    public void editName(String newName){
+        WebElement editNameField = driver.findElement(By.cssSelector("input[id='inputProfileName']"));
+        editNameField.click();
+        editNameField.clear();
+        editNameField.sendKeys(newName);
+
+    }
+
+    public void saveChanges(){
+
+        WebElement saveChanges = driver.findElement(By.cssSelector("button[class='btn-submit']"));
+        saveChanges.click();
+    }
+    public void enterCurrentPassword(String currentPassword){
+        WebElement currentPasswordField = driver.findElement(By.cssSelector("input[name='current_password']"));
+        currentPasswordField.click();
+        currentPasswordField.clear();
+        currentPasswordField.sendKeys(currentPassword);
+
+    }
+
+    public void varifySuccessMessage(){
+        WebElement profileUpdate = driver.findElement(By.xpath("//*[@id='app']/ul/li/div/main"));
+        Assert.assertTrue(profileUpdate.isDisplayed());
+    }
+
+    }
+
