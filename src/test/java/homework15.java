@@ -14,9 +14,6 @@ public class homework15 extends BaseTest{
     public void logOutTest() throws InterruptedException {
 
 
-        //EdgeOptions options = new EdgeOptions();
-        //options.addArguments("--remote-allow-origins=*");
-
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-notifications");
