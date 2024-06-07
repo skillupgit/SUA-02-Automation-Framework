@@ -30,7 +30,7 @@ public class ProfileTests extends BaseTest {
         saveChanges();
         Thread.sleep(1000);
 
-        varifySuccessMessage();
+        verifySuccessMessage();
         Thread.sleep(2000);
 
 
@@ -63,7 +63,7 @@ public class ProfileTests extends BaseTest {
 
     }
 
-    public void varifySuccessMessage(){
+    public void verifySuccessMessage(){
         WebElement profileUpdate = driver.findElement(By.xpath("//*[@id='app']/ul/li/div/main"));
         Assert.assertTrue(profileUpdate.isDisplayed());
     }
