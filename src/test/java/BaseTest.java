@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 
 import java.time.Duration;
 
@@ -16,6 +17,14 @@ public class BaseTest {
 
     public String url = "https://demo.koel.dev/";
 
+    public object[][] getDataFromDataProviders(){
+      return new Object[][] {
+              {"invalid@gmail.com","invalidPass"},
+              {"demo@koel.dev","invalidPass"},
+              {"invalidEmail@demo.dev","demo"},
+              {"",""},
+      };
+    }
 
 
     @BeforeSuite
@@ -24,7 +33,8 @@ public class BaseTest {
     }
 
     @BeforeMethod
-    public void launchBrowser(){
+    @Parameters({"BaseURL"})
+    public void launchBrowser(String baseUrl){
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--disable-notifications");
@@ -33,7 +43,7 @@ public class BaseTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
 
-        navigateToPage();
+        navigateToPage(baseUrl);
 
     }
     @AfterMethod
