@@ -1,12 +1,23 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class ProfileTests extends BaseTest {
 
-    @Test
-    public void profileNameChangeTest() throws InterruptedException {
+
+    @DataProvider(name = "ProfileNameChangeTest")
+    public static Object[] getDataFromDataProvider() {
+        return new Object[]{"Deep", "ABC","USER"};
+
+
+    }
+
+    @Test(dataProvider = "ProfileNameChangeTest")
+    
+    public void profileNameChangeTest(String currentName, String newName) throws InterruptedException {
 
         provideEmail("demo@koel.dev");
         Thread.sleep(1000);

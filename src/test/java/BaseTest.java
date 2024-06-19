@@ -17,7 +17,7 @@ public class BaseTest {
 
     public String url = "https://demo.koel.dev/";
 
-    public object[][] getDataFromDataProviders(){
+    public Object[][] getDataFromDataProviders(){
       return new Object[][] {
               {"invalid@gmail.com","invalidPass"},
               {"demo@koel.dev","invalidPass"},
@@ -52,7 +52,7 @@ public class BaseTest {
     }
 
 
-    public void navigateToPage(){
+    public void navigateToPage(String baseUrl){
 
         driver.get(url);
 

@@ -1,5 +1,7 @@
+import org.testng.annotations.DataProvider;
 public class TestDataSets {
-    public  static object[][] getDataFromDataProviders(){
+    @DataProvider(name = "NegativeLoginTestData")
+    public  static Object[][] getDataFromDataProviders(){
         return new Object[][] {
                 {"invalid@gmail.com","invalidPass"},
                 {"demo@koel.dev","invalidPass"},
@@ -7,4 +9,8 @@ public class TestDataSets {
                 {"",""},
         };
     }
+
 }
+
+
+
