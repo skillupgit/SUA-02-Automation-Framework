@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="Lesson18Homework">
-    <parameter name="current name" value=""/>
+    <parameter name="" value=""/>
     <parameter name="new name" value=""/>
     <test name="Lesson18Homework" preserve-order="false">
         <classes>
