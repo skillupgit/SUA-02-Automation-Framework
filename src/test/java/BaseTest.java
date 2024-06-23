@@ -19,7 +19,7 @@ public class BaseTest {
 
     public FluentWait<WebDriver> fluentWait;
 
-    //public String url = "https://demo.koel.dev/";
+    public String url = "https://demo.koel.dev/";
 
 
 
@@ -43,7 +43,7 @@ public class BaseTest {
                 .withTimeout(Duration.ofSeconds(5))
                 .pollingEvery(Duration.ofMillis(150));
 
-        navigateToPage(baseUrl);
+        navigateToPage();
     }
     @AfterMethod
     public void closeBrowser(){
@@ -57,7 +57,7 @@ public class BaseTest {
 
     }*/
 
-    public void navigateToPage(String url){
+    public void navigateToPage(){
         driver.get(url);
 
     }
