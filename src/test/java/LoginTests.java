@@ -1,115 +1,106 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
+
 public class LoginTests extends BaseTest {
+    private static final int Seconds = 5;
+    private WebDriverWait wait;
+
     @Test
     public void loginEmptyEmailPassword() {
-
         String url = "https://demo.koel.dev/";
         driver.get(url);
         Assert.assertEquals(driver.getCurrentUrl(), url);
-        //driver.quit();
     }
 
     @Test
-    public void logicSuccess() throws InterruptedException {
-
+    public void logicSuccess() {
         provideEmail("demo@koel.dev");
         providePassword("demo");
         clickLogin();
-        //WebElement profileAvatar = driver.findElement(By.cssSelector("a.view-profile img"));
-        //WebElement profileAvatar = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a.view-profile img")));
-        WebElement profileAvatar = fluentWait.until
-                (ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a.view-profile img")));
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(Seconds));
+        WebElement profileAvatar = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a.view-profile img")));
         Assert.assertTrue(profileAvatar.isDisplayed());
     }
 
-    @Test (enabled = false)
-    public void incorrectEmail() throws InterruptedException {
-
+    @Test(enabled = false)
+    public void incorrectEmail() {
         String expectedUrl = "https://demo.koel.dev/";
-        //navigateToPage();
 
         provideEmail("google@koel.dev");
-        Thread.sleep(1000);
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(Seconds));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("password")));
 
         providePassword("demo");
-        Thread.sleep(1000);
 
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("login-button")));
         clickLogin();
-        Thread.sleep(1000);
 
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
         Assert.assertEquals(driver.getCurrentUrl(), expectedUrl);
-
     }
 
-    @Test (enabled = false)
-    public void incorrectPassword() throws InterruptedException {
+    @Test(enabled = false)
+    public void incorrectPassword() {
         String expectedUrl = "https://demo.koel.dev/";
 
-        //navigateToPage();
-
-
         provideEmail("demo@koel.dev");
-        Thread.sleep(1000);
 
+        wait = new WebDriverWait(driver, Duration.ofSeconds(Seconds));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("password")));
 
         providePassword("12345");
-        Thread.sleep(1000);
 
-
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("login-button")));
         clickLogin();
-        Thread.sleep(1000);
 
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
         Assert.assertEquals(driver.getCurrentUrl(), expectedUrl);
-
-
     }
 
-
     @Test(enabled = true, description = "Not Yet due to issue")
-    public void logOutTest() throws InterruptedException {
-
+    public void logOutTest() {
         String expectedUrl = "https://demo.koel.dev/";
 
-        //navigateToPage();
-
         provideEmail("demo@koel.dev");
-        Thread.sleep(1000);
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(Seconds));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("password")));
 
         providePassword("demo");
-        Thread.sleep(1000);
 
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("login-button")));
         clickLogin();
-        Thread.sleep(1000);
 
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("a.view-profile img")));
         logOut();
-        Thread.sleep(1000);
 
-        Assert.assertEquals(driver.getCurrentUrl(),expectedUrl);
-
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
+        Assert.assertEquals(driver.getCurrentUrl(), expectedUrl);
     }
 
     @Test(enabled = false, dataProvider = "NegativeLoginTestData", dataProviderClass = TestDataSets.class)
-    public void negativeLoginTest(String email, String password) throws InterruptedException {
-
+    public void negativeLoginTest(String email, String password) {
         String expectedUrl = "https://demo.koel.dev/";
-        //navigateToPage();
 
         provideEmail(email);
-        Thread.sleep(1000);
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(Seconds));
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("password")));
 
         providePassword(password);
-        Thread.sleep(1000);
 
+        wait.until(ExpectedConditions.elementToBeClickable(By.id("login-button")));
         clickLogin();
-        Thread.sleep(1000);
 
+        wait.until(ExpectedConditions.urlToBe(expectedUrl));
         Assert.assertEquals(driver.getCurrentUrl(), expectedUrl);
-
     }
-
 }

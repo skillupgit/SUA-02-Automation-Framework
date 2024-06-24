@@ -1,25 +1,32 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Homework17 extends BaseTest{
+import java.time.Duration;
+
+public class Homework17 extends BaseTest {
 
     @Test
-    public void playSong() throws InterruptedException{
+    public void playSong() {
         navigateToPage();
         provideEmail("demo@koel.dev");
+        getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type='email']")));
+
         providePassword("demo");
+        getWebDriverWait().until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[type='password']")));
+
         loginToKoel();
-        Thread.sleep(2000);
+        getWebDriverWait().until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@type='submit']")));
 
-        // Click the play button
+
         clickPlay();
-        Thread.sleep(2000);
+        getWebDriverWait().until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@title='Play or resume']")));
 
-        // Assertion
+
         Assert.assertTrue(isSongPlaying(), "The song is not playing.");
-
     }
 
     public void loginToKoel() {
@@ -37,4 +44,7 @@ public class Homework17 extends BaseTest{
         return soundBar.isDisplayed();
     }
 
+    private WebDriverWait getWebDriverWait() {
+        return new WebDriverWait(driver, Duration.ofSeconds(5));
+    }
 }
