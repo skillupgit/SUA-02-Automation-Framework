@@ -2,6 +2,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.LoginPage;
 
 public class LoginTests extends BaseTest {
     @Test
@@ -95,6 +97,19 @@ public class LoginTests extends BaseTest {
 
         Assert.assertEquals(driver.getCurrentUrl(),url);
 
+    }
+    @Test
+    public void loginTest(){
+        //PageObjects
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        //Test
+        loginPage.provideEmail("demo@koel.dev");
+        loginPage.providePassword("demo");
+        loginPage.clickLogin();
+        //Assertions
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
+        
     }
 
 }
