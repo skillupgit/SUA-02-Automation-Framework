@@ -1,25 +1,115 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.time.Duration;
+import pages.HomePage;
+import pages.LoginPage;
 
 public class LoginTests extends BaseTest {
     @Test
     public void loginEmptyEmailPassword() {
 
-//      Added ChromeOptions argument below to fix websocket error
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-
-        WebDriver driver = new ChromeDriver(options);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
         String url = "https://demo.koel.dev/";
         driver.get(url);
         Assert.assertEquals(driver.getCurrentUrl(), url);
-        driver.quit();
+        //driver.quit();
     }
+
+    @Test
+    public void logicSuccess() throws InterruptedException {
+
+        //navigateToPage();
+
+        provideEmail("demo@koel.dev");
+        Thread.sleep(1000);
+
+        providePassword("demo");
+        Thread.sleep(1000);
+
+
+        clickLogin();
+        Thread.sleep(1000);
+
+        WebElement profileAvatar = driver.findElement(By.cssSelector("a.view-profile img"));
+
+        Assert.assertTrue(profileAvatar.isDisplayed());
+    }
+
+    @Test
+    public void incorrectEmail() throws InterruptedException {
+
+
+        //navigateToPage();
+
+        provideEmail("google@koel.dev");
+        Thread.sleep(1000);
+
+        providePassword("demo");
+        Thread.sleep(1000);
+
+        clickLogin();
+        Thread.sleep(1000);
+
+        Assert.assertEquals(driver.getCurrentUrl(), url);
+
+    }
+
+    @Test
+    public void incorrectPassword() throws InterruptedException {
+
+
+        //navigateToPage();
+
+
+        provideEmail("demo@koel.dev");
+        Thread.sleep(1000);
+
+
+        providePassword("12345");
+        Thread.sleep(1000);
+
+
+        clickLogin();
+        Thread.sleep(1000);
+
+        Assert.assertEquals(driver.getCurrentUrl(), url);
+
+
+    }
+
+
+    @Test(enabled = true, description = "Not Yet due to issue")
+    public void logOutTest() throws InterruptedException {
+
+        //navigateToPage();
+
+        provideEmail("demo@koel.dev");
+        Thread.sleep(1000);
+
+        providePassword("demo");
+        Thread.sleep(1000);
+
+        clickLogin();
+        Thread.sleep(1000);
+
+        logOut();
+        Thread.sleep(1000);
+
+        Assert.assertEquals(driver.getCurrentUrl(),url);
+
+    }
+    @Test
+    public void loginTest(){
+        //PageObjects
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
+        //Test
+        loginPage.provideEmail("demo@koel.dev");
+        loginPage.providePassword("demo");
+        loginPage.clickLogin();
+        //Assertions
+        Assert.assertTrue(homePage.getUserAvatar().isDisplayed());
+        
+    }
+
 }

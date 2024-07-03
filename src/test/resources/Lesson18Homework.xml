@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="TestNG">
-   <parameter name="BaseURL" value="https://demo.koel.dev/"/>
-    <test name="Example Test" preserve-order="false">
+<suite name="Lesson18Homework">
+    <parameter name="" value=""/>
+    <parameter name="new name" value=""/>
+    <test name="Lesson18Homework" preserve-order="false">
         <classes>
             <class name="LoginTests"/>
             <class name="BaseTest"/>
