@@ -4,19 +4,21 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import pages.HomePage;
+import pages.LoginPage;
 
 public class ProfileTests extends BaseTest {
 
 
     @DataProvider(name = "ProfileNameChangeTest")
     public static Object[] getDataFromDataProvider() {
-        return new Object[]{"Deep", "ABC","USER"};
+        return new Object[]{"Deep", "ABC", "USER"};
 
 
     }
 
     @Test(dataProvider = "ProfileNameChangeTest")
-    
+
     public void profileNameChangeTest(String currentName, String newName) throws InterruptedException {
 
         provideEmail("demo@koel.dev");
@@ -45,28 +47,27 @@ public class ProfileTests extends BaseTest {
         Thread.sleep(2000);
 
 
-
     }
 
-    public void clickOnProfileAvatar(){
+    public void clickOnProfileAvatar() {
         WebElement profileIcon = driver.findElement(By.cssSelector("img[alt='Avatar of Koel']"));
         profileIcon.click();
     }
 
-    public void editName(String newName){
+    public void editName(String newName) {
         WebElement editNameField = driver.findElement(By.cssSelector("input[id='inputProfileName']"));
         editNameField.click();
-        editNameField.clear();
         editNameField.sendKeys(newName);
 
     }
 
-    public void saveChanges(){
+    public void saveChanges() {
 
         WebElement saveChanges = driver.findElement(By.cssSelector("button[class='btn-submit']"));
         saveChanges.click();
     }
-    public void enterCurrentPassword(String currentPassword){
+
+    public void enterCurrentPassword(String currentPassword) {
         WebElement currentPasswordField = driver.findElement(By.cssSelector("input[name='current_password']"));
         currentPasswordField.click();
         currentPasswordField.clear();
@@ -74,10 +75,23 @@ public class ProfileTests extends BaseTest {
 
     }
 
-    public void verifySuccessMessage(){
+    public void verifySuccessMessage() {
         WebElement profileUpdate = driver.findElement(By.xpath("//*[@id='app']/ul/li/div/main"));
         Assert.assertTrue(profileUpdate.isDisplayed());
     }
 
-    }
+    @Test
+    public void profileTests() {
+        LoginPage loginPage = new LoginPage(driver);
+        HomePage homePage = new HomePage(driver);
 
+        provideEmail("demo@koel.dev");
+        providePassword("demo");
+        clickLogin();
+        clickOnProfileAvatar();
+        editName("Deep");
+        saveChanges();
+        verifySuccessMessage();
+
+    }
+}
